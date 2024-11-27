@@ -4,6 +4,7 @@ public class CarModel : IModel, ICar
 {
     public Guid Id { get; }
     private string _name;
+    private string _brand;
     public string Name
     {
         get => _name;
@@ -17,7 +18,15 @@ public class CarModel : IModel, ICar
     public DateTime DateCreate { get; }
     public DateTime DateModified { get; private set; }
     
-    public string Brand { get; }
+    public string Brand
+    {
+        get => _brand;
+        set
+        {
+            _brand = value;
+            DateModified = DateTime.Now;
+        }
+    }
 
     public CarModel(string name, string brand)
     {

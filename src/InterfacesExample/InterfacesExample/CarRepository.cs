@@ -2,33 +2,59 @@
 
 public class CarRepository : IRespository<CarModel>
 {
+    private readonly List<CarModel> _models;
+
+    public CarRepository()
+    {
+        _models = new List<CarModel>();
+    }
+
     public CarModel? Get(Guid Id)
     {
-        throw new NotImplementedException();
+        foreach (var model in _models)
+        {
+            if (model.Id == Id) return model;
+        }
+        return null;
     }
 
     public List<CarModel> Get()
     {
-        throw new NotImplementedException();
+        return _models;
     }
 
     public void Insert(CarModel model)
     {
-        throw new NotImplementedException();
+        if (model == null) return;
+        _models.Add(model);
     }
 
     public void Update(CarModel model)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < _models.Count; i++)
+        {
+            if (model.Id == _models[i].Id)
+            {
+                _models[i] = model;
+                return;
+            }
+        }
     }
 
     public void Delete(Guid Id)
     {
-        throw new NotImplementedException();
+        foreach (var model in _models.ToArray())
+        {
+            if (model.Id == Id)
+            {
+                _models.Remove(model);
+                return;
+            }
+        }
     }
 
     public int RecordCount()
     {
-        throw new NotImplementedException();
+        return _models.Count;
     }
 }
