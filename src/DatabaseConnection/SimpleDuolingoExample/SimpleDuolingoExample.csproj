@@ -6,10 +6,23 @@
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>SimpleDuolingoExample</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="MySqlConnector" Version="2.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="StartForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="UserView.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
+      <Compile Update="NavigationView.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
