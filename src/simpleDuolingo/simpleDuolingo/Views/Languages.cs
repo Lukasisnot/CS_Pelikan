@@ -2,17 +2,17 @@
 
 namespace simpleDuolingo.Views;
 
-public partial class Users : UserControl
+public partial class Languages : UserControl
 {
     private readonly BaseForm _parentForm;
-    private readonly UserRepository _userRepository;
+    private readonly LanguageRepository _languageRepository;
 
-    public Users(BaseForm parentForm, DBDriver dbDriver)
+    public Languages(BaseForm parentForm, DBDriver dbDriver)
     {
         _parentForm = parentForm;
-        _userRepository = new UserRepository(dbDriver);
+        _languageRepository = new LanguageRepository(dbDriver);
         InitializeComponent();
-        LoadUsers();
+        LoadLangs();
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -20,64 +20,64 @@ public partial class Users : UserControl
         _parentForm.SelectView(BaseForm.ViewType.Navigation);
     }
     
-    private void PopulateListView(List<User> users)
+    private void PopulateListView(List<Language> languages)
     {
         listView2.Items.Clear();
-        foreach (var user in users)
+        foreach (var language in languages)
         {
             ListViewItem item = new ListViewItem();
-            item.Text = user.Id.ToString();
-            item.SubItems.Add(user.Username);
-            item.SubItems.Add(user.CreatedAt.ToString());
-            item.SubItems.Add(user.ModifiedAt.ToString());
+            item.Text = language.Id.ToString();
+            item.SubItems.Add(language.Name);
+            item.SubItems.Add(language.CreatedAt.ToString());
+            item.SubItems.Add(language.ModifiedAt.ToString());
             listView2.Items.Add(item);
         }
     }
     
-    private void LoadUsers()
+    private void LoadLangs()
     {
-        List<User> users = _userRepository.GetUsers();
-        if (_userRepository.ThrownException is not null)
+        List<Language> languages = _languageRepository.GetLang();
+        if (_languageRepository.ThrownException is not null)
         {
-            textBox3.Text = _userRepository.ThrownException.Message;
-            _userRepository.ThrownException = null;
+            textBox3.Text = _languageRepository.ThrownException.Message;
+            _languageRepository.ThrownException = null;
             // _userRepository = null;
         }
         else
         {
-            PopulateListView(users);
+            PopulateListView(languages);
         }
     }
 
     private void button4_Click(object sender, EventArgs e)
     {
-        LoadUsers();
+        LoadLangs();
         textBox3.Text = "";
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-        InsertUser();
+        InsertLang();
     }
 
     private void textBox1_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
-            InsertUser();
+            InsertLang();
         }
     }
 
-    private void InsertUser()
+    private void InsertLang()
     {
         if (textBox1.Text == "") return;
         
-        _userRepository.InsertUser(textBox1.Text);
-        LoadUsers();
+        _languageRepository.InsertLang(textBox1.Text);
+        LoadLangs();
         textBox1.Text = "";
     }
     
-    private void DeleteUserWithId()
+    private void DeleteLangWithId()
     {
         if (textBox2.Text == "") return;
         
@@ -91,26 +91,26 @@ public partial class Users : UserControl
             textBox3.Text = "Please enter a valid ID";
             return;
         }
-        _userRepository.DeteteUserWithId(id);
-        if (_userRepository?.ThrownException is not null)
+        _languageRepository.DeteteLangWithId(id);
+        if (_languageRepository?.ThrownException is not null)
         {
-            textBox3.Text = _userRepository.ThrownException.Message;
-            _userRepository.ThrownException = null;
+            textBox3.Text = _languageRepository.ThrownException.Message;
+            _languageRepository.ThrownException = null;
             return;
         }
-        LoadUsers();
+        LoadLangs();
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
-        DeleteUserWithId();        
+        DeleteLangWithId(); 
     }
 
     private void textBox2_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Enter)
         {
-            DeleteUserWithId();
+            DeleteLangWithId();
         }
     }
 }

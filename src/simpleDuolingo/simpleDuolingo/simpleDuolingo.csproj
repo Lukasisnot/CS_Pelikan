@@ -19,6 +19,9 @@
       <Compile Update="Views\Navigation.cs">
         <SubType>UserControl</SubType>
       </Compile>
+      <Compile Update="Views\Languages.cs">
+        <SubType>UserControl</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

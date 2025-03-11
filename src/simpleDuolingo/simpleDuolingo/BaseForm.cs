@@ -3,8 +3,9 @@ namespace simpleDuolingo;
 
 public partial class BaseForm : Form
 {
-    private Navigation navigationView;
+    private Navigation _navigationView;
     private Users _usersView;
+    private Languages _languagesView;
     
     public DBDriver _dbDriver;
 
@@ -13,15 +14,17 @@ public partial class BaseForm : Form
     public enum ViewType
     {
         Navigation,
-        User
+        User,
+        Language
     }
 
     public BaseForm ()
     {
         InitializeComponent();
         _dbDriver = new DBDriver();
-        navigationView = new Navigation(this, _dbDriver);
+        _navigationView = new Navigation(this, _dbDriver);
         _usersView = new Users(this, _dbDriver);
+        _languagesView = new Languages(this, _dbDriver);
         SelectView(ViewType.Navigation);
     }
 
@@ -35,8 +38,9 @@ public partial class BaseForm : Form
     {
         _currentView = viewType switch
         {
-            ViewType.Navigation => navigationView,
+            ViewType.Navigation => _navigationView,
             ViewType.User => _usersView,
+            ViewType.Language => _languagesView,
         };
         RenderCurrentView();
     }

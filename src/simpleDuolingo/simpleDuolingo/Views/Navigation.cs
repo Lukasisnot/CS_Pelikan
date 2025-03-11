@@ -16,4 +16,9 @@ public partial class Navigation : UserControl
     {
         _parentForm.SelectView(BaseForm.ViewType.User);
     }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+        _parentForm.SelectView(BaseForm.ViewType.Language);
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace simpleDuolingo.Views;
 
-partial class Users
+partial class Languages
 {
     /// <summary> 
     /// Required designer variable.
@@ -106,6 +106,7 @@ partial class Users
         // 
         textBox3.Location = new System.Drawing.Point(25, 316);
         textBox3.Name = "textBox3";
+        textBox3.ReadOnly = true;
         textBox3.Size = new System.Drawing.Size(264, 23);
         textBox3.TabIndex = 7;
         // 
@@ -136,7 +137,7 @@ partial class Users
         // nameCol
         // 
         nameCol.Name = "nameCol";
-        nameCol.Text = "Username";
+        nameCol.Text = "Name";
         nameCol.Width = 105;
         // 
         // createdatCol
@@ -151,7 +152,7 @@ partial class Users
         modifiedatCol.Text = "Modified At";
         modifiedatCol.Width = 136;
         // 
-        // Users
+        // Languages
         // 
         Controls.Add(listView2);
         Controls.Add(textBox3);
