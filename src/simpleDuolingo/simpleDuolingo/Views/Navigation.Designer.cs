@@ -1,0 +1,81 @@
+﻿using System.ComponentModel;
+
+namespace simpleDuolingo.Views;
+
+partial class Navigation
+{
+    /// <summary> 
+    /// Required designer variable.
+    /// </summary>
+    private IContainer components = null;
+
+    /// <summary> 
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && (components != null))
+        {
+            components.Dispose();
+        }
+
+        base.Dispose(disposing);
+    }
+
+    #region Component Designer generated code
+
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        button1 = new System.Windows.Forms.Button();
+        button2 = new System.Windows.Forms.Button();
+        button3 = new System.Windows.Forms.Button();
+        SuspendLayout();
+        // 
+        // button1
+        // 
+        button1.Location = new System.Drawing.Point(296, 166);
+        button1.Name = "button1";
+        button1.Size = new System.Drawing.Size(75, 23);
+        button1.TabIndex = 0;
+        button1.Text = "Users";
+        button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
+        // 
+        // button2
+        // 
+        button2.Location = new System.Drawing.Point(377, 166);
+        button2.Name = "button2";
+        button2.Size = new System.Drawing.Size(75, 23);
+        button2.TabIndex = 1;
+        button2.Text = "Langs";
+        button2.UseVisualStyleBackColor = true;
+        // 
+        // button3
+        // 
+        button3.Location = new System.Drawing.Point(458, 166);
+        button3.Name = "button3";
+        button3.Size = new System.Drawing.Size(75, 23);
+        button3.TabIndex = 2;
+        button3.Text = "Regs";
+        button3.UseVisualStyleBackColor = true;
+        // 
+        // Navigation
+        // 
+        Controls.Add(button3);
+        Controls.Add(button2);
+        Controls.Add(button1);
+        Size = new System.Drawing.Size(967, 566);
+        ResumeLayout(false);
+    }
+
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Button button3;
+
+    #endregion
+}
