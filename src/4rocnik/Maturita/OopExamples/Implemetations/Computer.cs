@@ -51,9 +51,25 @@ public class Computer : IComputer
         }
     }
 
+    public void ChangeOwner(IEntity? newOwner)
+    {
+        Owner = newOwner;
+    }
+
+    public void RemoveOwner()
+    {
+        throw new NotImplementedException();
+    }
+
     public IComputer BuildNewComputer(IComputerConfiguration configuration)
     {
         Computer computer = new Computer();
+        computer.MotherBoard = configuration.MotherBoard;
+        computer.Cpu = configuration.Cpu;
+        computer.Gpu = configuration.Gpu;
+        computer.Ram = configuration.Ram;
+        computer.PowerSupply = configuration.PowerSupply;
+        computer.Case = configuration.Case;
         return computer;
     }
 }

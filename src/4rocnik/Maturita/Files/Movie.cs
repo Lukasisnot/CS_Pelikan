@@ -1,17 +1,18 @@
 namespace Files
 {
+
     public class Movie
     {
-        private string Film { get; set; }
-        private string Genre { get; set; }
-        private string LeadStudio { get; set; }
-        private int AudienceScore { get; set; }
-        private decimal Profitability { get; set; }
-        private int RottenTomatoes { get; set; }
-        private float WorldwideGross { get; set; }
-        private int Year { get; set; }
+        public string Film { get; }
+        public string Genre { get; }
+        public string LeadStudio { get; }
+        public string AudienceScore { get; }
+        public string Profitability { get; }
+        public string RottenTomatoes { get; }
+        public string WorldwideGross { get; }
+        public string Year { get; }
 
-        public Movie(string film, string genre, string leadStudio, int audienceScore, decimal profitability, int rottenTomatoes, float worldwideGross, int year)
+        public Movie(string film, string genre, string leadStudio, string audienceScore, string profitability, string rottenTomatoes, string worldwideGross, string year)
         {
             Film = film;
             Genre = genre;
@@ -21,6 +22,13 @@ namespace Files
             RottenTomatoes = rottenTomatoes;
             WorldwideGross = worldwideGross;
             Year = year;
+        }
+
+        public override string ToString()
+        {
+            return $"Film: {Film}, Genre: {Genre}, Lead Studio: {LeadStudio}, " +
+                   $"Audience Score: {AudienceScore}, Profitability: {Profitability}, " +
+                   $"Rotten Tomatoes: {RottenTomatoes}, Worldwide Gross: {WorldwideGross}, Year: {Year}";
         }
     }
 }
