@@ -1,3 +1,5 @@
+using OopExamples.Interfaces.Exceptions;
+
 namespace OopExamples.Implemetations;
 using OopExamples.Interfaces;
 using System.Data;
@@ -47,13 +49,15 @@ public class Computer : IComputer
         }
         catch (Exception ex)
         {
-            throw new ArgumentException("Invalid equation format.", ex);
+            throw new InvalidEquationException();
         }
     }
 
     public void ChangeOwner(IEntity? newOwner)
     {
         Owner = newOwner;
+        IsPersonalPC = Owner is IPerson;
+        IsCompanyPC = Owner is ICompany;
     }
 
     public void RemoveOwner()
@@ -63,6 +67,9 @@ public class Computer : IComputer
 
     public IComputer BuildNewComputer(IComputerConfiguration configuration)
     {
+        if (configuration.MotherBoard is null || configuration.Cpu is null || configuration.Gpu is null || configuration.Ram is null || configuration.PowerSupply is null  || configuration.Case is null)
+            throw new ComputerMissingComponentsException();
+        
         Computer computer = new Computer(); 
         computer.MotherBoard = configuration.MotherBoard;
         computer.Cpu = configuration.Cpu;
