@@ -1,6 +1,6 @@
-using System.Reflection;
+using OopExamples.Implemetations;
 using OopExamples.Interfaces;
-using OopExamples.Tests.Extensions;
+using Monitor = OopExamples.Implemetations.Monitor;
 
 namespace OopExamples.Tests;
 
@@ -13,71 +13,37 @@ public class NewComputerTests
     protected readonly ICompany Company;
     protected readonly IEnumerable<IMonitor> Monitors;
 
-    private readonly List<GPUConnector> MonitorConnectors =
-    [
+    private readonly List<GPUConnector> MonitorConnectors = new List<GPUConnector>()
+    {
         GPUConnector.AVG,
         GPUConnector.AVG,
         GPUConnector.DVI,
-        GPUConnector.HDMI
-    ];
-
-    private new Dictionary<string, object> InitProperties => new()
-    {
-        { "Name", "test name" },
+        GPUConnector.HDMI,
     };
 
     public NewComputerTests()
     {
-        ComputerConfiguration = InstantiateImplementation<IComputerConfiguration>(
-            InitProperties
-                .AddProperty(nameof(ComputerConfiguration.MotherBoard), 
-                    InstantiateImplementation<IMotherBoard>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Cpu), 
-                    InstantiateImplementation<ICPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Gpu), 
-                    InstantiateImplementation<IGPU>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Ram), 
-                    InstantiateImplementation<IRAM>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.PowerSupply), 
-                    InstantiateImplementation<IPowerSupply>(InitProperties))
-                .AddProperty(nameof(ComputerConfiguration.Case), 
-                    InstantiateImplementation<ICase>(InitProperties))
-            );
-        // tests
+        // testsdsadsa
         // Create instance of interfaces, using your implementation
-        ComputerConfiguration = null;
-        Builder = null;
-        ComputerBuilder builder =  new ComputerBuilder();
-        builder
-            .AddCase(new Case())
-            .AddMotherBoard(new MotherBoard())
-            .AddGPU(new GPU())
-            .AddCPU(new CPU())
-            .AddPowerSupply(new PowerSupply())
-            .AddRam(new RAM());
-        Computer = builder.Build();
+        ComputerConfiguration = new ComputerConfiguration();
+        Builder = new ComputerBuilder();
+        Computer = new Computer();
         Person = new Person();
         Company = new Company();
-        Company.Owner = Person;
-        
-        
-        Builder = InstantiateImplementation<IComputerBuilder>(
-            InitProperties);
-        Computer = Builder.BuildFromConfiguration(ComputerConfiguration);
-        Person = InstantiateImplementation<IPerson>(
-            InitProperties);
-        Company = InstantiateImplementation<ICompany>(
-            InitProperties
-                .AddProperty(nameof(ICompany.Owner), "Test owner")
-            );
-        
-        // For Monitors, create one instance per connector
-        Monitors = MonitorConnectors.Select(connector =>
-            InstantiateImplementation<IMonitor>(
-                InitProperties
-                    .AddProperty(nameof(IMonitor.Connector), connector)
-            )
-        ).ToList();
+        Monitors = MonitorConnectors.Select<GPUConnector, IMonitor>(connector =>
+            new Monitor("name", connector)
+        );
+
+        ComputerConfiguration.Gpu = new GPU();
+        ComputerConfiguration.Cpu = new CPU();
+        ComputerConfiguration.Ram = new RAM();
+        ComputerConfiguration.PowerSupply = new PowerSupply();
+        ComputerConfiguration.MotherBoard = new MotherBoard();
+
+        // Do not touch this
+        Computer = Computer ?? throw new System.NotImplementedException($"{nameof(Computer)} not implemented");
+        Person = Person ?? throw new System.NotImplementedException($"{nameof(Person)} not implemented");
+        Company = Company ?? throw new System.NotImplementedException($"{nameof(Company)} not implemented");
     }
 
     [Fact]
@@ -91,7 +57,7 @@ public class NewComputerTests
         Assert.NotNull(Monitors);
 
         Assert.NotEmpty(Monitors);
-        Assert.Equal(MonitorConnectors.Count, Monitors.Count());
+        Assert.Equal(MonitorConnectors.Count(), Monitors.Count());
         Assert.All(Monitors, monitor =>
             Assert.Contains(monitor.Connector, MonitorConnectors));
     }
@@ -103,51 +69,5 @@ public class NewComputerTests
         Assert.NotNull(computer.Ram);
         Assert.NotNull(computer.PowerSupply);
         Assert.NotNull(computer.Case);
-    }
-
-    private T InstantiateImplementation<T>(Dictionary<string, object> propertyValues = null) where T : class
-    {
-        var interfaceType = typeof(T);
-
-        var types = Assembly.GetExecutingAssembly().GetTypes();
-
-        foreach (var type in types)
-        {
-            if (type.IsClass &&
-                !type.IsAbstract &&
-                interfaceType.IsAssignableFrom(type) &&
-                type.Namespace != null &&
-                type.Namespace.IndexOf("implementations", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                try
-                {
-                    // Create instance using parameterless constructor
-                    var instance = Activator.CreateInstance(type);
-                    if (instance == null) continue;
-
-                    if (propertyValues != null)
-                    {
-                        foreach (var kvp in propertyValues)
-                        {
-                            var prop = type.GetProperty(kvp.Key,
-                                BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-
-                            if (prop != null && prop.CanWrite)
-                            {
-                                prop.SetValue(instance, kvp.Value);
-                            }
-                        }
-                    }
-
-                    return instance as T;
-                }
-                catch
-                {
-                    // Ignore exceptions and try next type
-                }
-            }
-        }
-
-        return null;
     }
 }
