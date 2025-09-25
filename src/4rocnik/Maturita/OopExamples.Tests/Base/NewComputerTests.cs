@@ -1,3 +1,4 @@
+using OopExamples.Implemetations;
 using OopExamples.Interfaces;
 
 namespace OopExamples.Tests;
@@ -15,9 +16,18 @@ public class NewComputerTests
         // Create instance of interfaces, using your implementation
         ComputerConfiguration = null;
         Builder = null;
-        Computer = null;
-        Person = null;
-        Company = null;
+        ComputerBuilder builder =  new ComputerBuilder();
+        builder
+            .AddCase(new Case())
+            .AddMotherBoard(new MotherBoard())
+            .AddGPU(new GPU())
+            .AddCPU(new CPU())
+            .AddPowerSupply(new PowerSupply())
+            .AddRam(new RAM());
+        Computer = builder.Build();
+        Person = new Person();
+        Company = new Company();
+        Company.Owner = Person;
         
         // Do not touch this
         Computer = Computer ?? throw new System.NotImplementedException($"{nameof(Computer)} not implemented");
