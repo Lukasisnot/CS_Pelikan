@@ -5,27 +5,27 @@ public class GPU : IGPU
 {
     public string Name { get; set; }
     public GPUConnector[] Connectors { get; init; }
-    public IComputer? Computer { get; }
-    public GPUConnector[] AvailableConnectors { get; }
-    public IMonitor[] ConnectedMonitors { get; }
-    public bool IsUsed { get; }
+    public IComputer? Computer { get; set; }
+    public GPUConnector[] AvailableConnectors { get; set; }
+    public IMonitor[] ConnectedMonitors { get; set; }
+    public bool IsUsed { get; set; }
     public void Connect(IComputer computer)
     {
-        throw new NotImplementedException();
+        Computer = computer;
     }
 
     public void Disconnect()
     {
-        throw new NotImplementedException();
+        Computer = null;
     }
 
     public void ConnectMonitor(IMonitor monitor)
     {
-        throw new NotImplementedException();
+        ConnectedMonitors.ToList().Add(monitor);
     }
 
     public void DisconnectMonitor(IMonitor monitor)
     {
-        throw new NotImplementedException();
+        ConnectedMonitors.ToList().Remove(monitor);
     }
 }
